@@ -5,8 +5,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by 廖师兄
- * 2017-07-03 01:31
+ * @author CodeMonkey
+ * @date 2020/3/3 18:34
  */
 @Data
 @Component
@@ -14,6 +14,5 @@ import org.springframework.stereotype.Component;
 public class WechatAccountConfig {
 
     private String mpAppId;
-
     private String mpAppSecret;
 }

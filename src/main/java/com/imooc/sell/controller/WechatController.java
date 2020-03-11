@@ -17,8 +17,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 /**
- * Created by 廖师兄
- * 2017-07-03 01:20
+ * @author CodeMonkey
+ * @date 2020/3/3 17:07
  */
 @Controller
 @RequestMapping("/wechat")
@@ -30,9 +30,7 @@ public class WechatController {
 
     @GetMapping("/authorize")
     public String authorize(@RequestParam("returnUrl") String returnUrl) throws UnsupportedEncodingException {
-        //1. 配置
-        //2. 调用方法
-//        String url = "http://sell.natapp4.cc/sell/wechat/userInfo";
+
         String url = "http://noodle.nat300.top/sell/wechat/userInfo";
         String redirectUrl = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAUTH2_SCOPE_BASE, URLEncoder.encode(returnUrl));
         return "redirect:" + redirectUrl;
@@ -40,7 +38,7 @@ public class WechatController {
 
     @GetMapping("/userInfo")
     public String userInfo(@RequestParam("code") String code,
-                         @RequestParam("state") String returnUrl) {
+                           @RequestParam("state") String returnUrl) {
         WxMpOAuth2AccessToken wxMpOAuth2AccessToken = new WxMpOAuth2AccessToken();
         try {
             wxMpOAuth2AccessToken = wxMpService.oauth2getAccessToken(code);
