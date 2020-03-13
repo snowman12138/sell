@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 /**
- * @author CodeMonkey
- * @date 2020/3/3 18:41
+ * Created by 廖师兄
+ * 2017-07-03 01:25
  */
 @Component
 public class WechatMpConfig {
@@ -19,21 +19,17 @@ public class WechatMpConfig {
     private WechatAccountConfig accountConfig;
 
     @Bean
-    public WxMpService mpAppSecret(){
-
+    public WxMpService wxMpService() {
         WxMpService wxMpService = new WxMpServiceImpl();
-        wxMpService.setWxMpConfigStorage(WxMpConfigStorage());
+        wxMpService.setWxMpConfigStorage(wxMpConfigStorage());
         return wxMpService;
     }
 
     @Bean
-    public WxMpConfigStorage WxMpConfigStorage(){
-
-//        WxMpDefaultConfigImpl wxMpDefaultConfig = new WxMpDefaultConfigImpl();
-        WxMpInMemoryConfigStorage wxMpDefaultConfig = new WxMpInMemoryConfigStorage();
-        wxMpDefaultConfig.setAppId(accountConfig.getMpAppId());
-        wxMpDefaultConfig.setSecret(accountConfig.getMpAppSecret());
-
-        return wxMpDefaultConfig;
+    public WxMpConfigStorage wxMpConfigStorage() {
+        WxMpInMemoryConfigStorage wxMpConfigStorage = new WxMpInMemoryConfigStorage();
+        wxMpConfigStorage.setAppId(accountConfig.getMpAppId());
+        wxMpConfigStorage.setSecret(accountConfig.getMpAppSecret());
+        return wxMpConfigStorage;
     }
 }
