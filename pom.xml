@@ -77,7 +77,6 @@
             <artifactId>spring-boot-starter-freemarker</artifactId>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
