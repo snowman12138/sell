@@ -13,6 +13,7 @@ import com.imooc.sell.exception.SellException;
 import com.imooc.sell.repository.OrderDetailRepository;
 import com.imooc.sell.repository.OrderMasterRepository;
 import com.imooc.sell.service.OrderService;
+import com.imooc.sell.service.PayService;
 import com.imooc.sell.service.ProductService;
 import com.imooc.sell.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -24,12 +25,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
-import sun.rmi.runtime.Log;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,6 +48,9 @@ public class OrderServiceImpL implements OrderService {
 
     @Autowired
     private OrderMasterRepository orderMasterRepository;
+
+    @Autowired
+    private PayService payService;
 
     @Override
     @Transactional
@@ -108,7 +109,7 @@ public class OrderServiceImpL implements OrderService {
         List<OrderDetail> orderDetailList = orderDetailRepository.findByOrderId(orderMaster.getOrderId());
 
         if (CollectionUtils.isEmpty(orderDetailList)){
-            throw new SellException(ResultEnum.ORDERDETAIL_NOT_EXIST);
+            throw new SellException(ResultEnum.ORDER_DETAIL_NOT_EXIST);
         }
         OrderDTO orderDTO = new OrderDTO();
         copyProperties(orderMaster,orderDTO);
@@ -165,7 +166,7 @@ public class OrderServiceImpL implements OrderService {
 
         //如果已经支付的，需要进行退款
         if (orderDTO.getPayStatus().equals(PayStatusEnum.SUCCESS)){
-            //todo
+            payService.refund(orderDTO);
         }
         return orderDTO;
     }
@@ -215,5 +216,17 @@ public class OrderServiceImpL implements OrderService {
             throw  new SellException(ResultEnum.ORDER_UPDATE_FAIL);
         }
         return orderDTO;
+    }
+
+    @Override
+    public Page<OrderDTO> findList(Pageable pageable) {
+
+        Page<OrderMaster> orderMasterPage = orderMasterRepository.findAll(pageable);
+        List<OrderDTO> orderDTOList = OrderMasterToOrderDTOCoverter.convert(orderMasterPage.getContent());
+
+        Page<OrderDTO> orderDTOPage = new PageImpl<OrderDTO>(orderDTOList,pageable,orderMasterPage.getTotalElements());
+
+        return orderDTOPage;
+
     }
 }

@@ -4,6 +4,7 @@ import com.imooc.sell.dataobject.OrderDetail;
 import com.imooc.sell.dto.OrderDTO;
 import com.imooc.sell.enums.OrderStatusEnum;
 import com.imooc.sell.enums.PayStatusEnum;
+import com.imooc.sell.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
+import sun.java2d.opengl.OGLContext;
 
 import javax.xml.stream.events.StartElement;
 import java.util.ArrayList;
@@ -100,5 +102,16 @@ public class OrderServiceImpLTest {
         OrderDTO orderDTO = orderService.findone(ORDER_ID);
         OrderDTO paid = orderService.paid(orderDTO);
         assertEquals(paid.getPayStatus(), PayStatusEnum.SUCCESS.getCode());
+    }
+
+    @Test
+    public void findlist(){
+
+        PageRequest pageRequest = new PageRequest(0, 20);
+        Page<OrderDTO> orderDTOPage = orderService.findList(pageRequest);
+        assertNotEquals(0,orderDTOPage.getTotalElements());
+        log.info("【查询出来的订单的分页信息】total={},orderDTOPage={}",orderDTOPage.getTotalElements(), JsonUtil.toJson(orderDTOPage.getContent()));
+
+
     }
 }

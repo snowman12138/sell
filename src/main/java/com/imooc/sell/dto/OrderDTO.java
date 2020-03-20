@@ -1,7 +1,11 @@
 package com.imooc.sell.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.imooc.sell.dataobject.OrderDetail;
+import com.imooc.sell.enums.OrderStatusEnum;
+import com.imooc.sell.enums.PayStatusEnum;
+import com.imooc.sell.utils.EnumUtil;
 import com.imooc.sell.utils.serializer.DateToLongSerializer;
 import lombok.Data;
 
@@ -51,4 +55,17 @@ public class OrderDTO  {
 
     /**订单详情列表*/
     List<OrderDetail> orderDetailList;
+
+    /** 获取订单状态的枚举*/
+    @JsonIgnore
+    public OrderStatusEnum getOrderStatusEnum(){
+
+       return EnumUtil.getEnumByCode(OrderStatusEnum.class,orderStatus);
+    }
+
+    /**获取支付状态的枚举*/
+    @JsonIgnore
+    public PayStatusEnum getPayStatusEnum(){
+        return EnumUtil.getEnumByCode(PayStatusEnum.class,payStatus);
+    }
 }

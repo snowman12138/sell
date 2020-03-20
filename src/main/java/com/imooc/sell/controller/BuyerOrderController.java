@@ -46,7 +46,7 @@ public class BuyerOrderController {
 
     //创建订单
     @PostMapping("/create")
-    public ResultVO<Map<String,String>> creaate(@Valid OrderForm orderForm, BindingResult bindingResult){
+    public ResultVO<Map<String,String>> create(@Valid OrderForm orderForm, BindingResult bindingResult){
         //判断前端传过来的参数有没有问题
         if (bindingResult.hasErrors()){
             log.error("【创建订单】订单参数不正确,orderForm={}",orderForm);
