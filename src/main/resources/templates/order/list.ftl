@@ -34,20 +34,23 @@
                         </thead>
                         <tbody>
                             <#list orderDTOPage.content as orderDTo>
+                            <tr>
                                 <#assign index = index+1>
-                            <td> ${index}</td>
-                            <td> ${orderDTo.orderId}</td>
-                            <td> ${orderDTo.buyerName}</td>
-                            <td> ${orderDTo.buyerPhone}</td>
-                            <td> ${orderDTo.buyerAddress}</td>
-                            <td> ${orderDTo.orderAmount}</td>
-                            <td> ${orderDTo.getOrderStatusEnum().msg}</td>
-                            <td> ${orderDTo.getPayStatusEnum().message}</td>
-                            <td> ${orderDTo.createTime}</td>
-                            <td align="center"><a href="/sell/seller/order/detail?orderId=${orderDTo.getOrderId()}">详情</a></td>
+                                <td> ${index}</td>
+                                <td> ${orderDTo.orderId}</td>
+                                <td> ${orderDTo.buyerName}</td>
+                                <td> ${orderDTo.buyerPhone}</td>
+                                <td> ${orderDTo.buyerAddress}</td>
+                                <td> ${orderDTo.orderAmount}</td>
+                                <td> ${orderDTo.getOrderStatusEnum().msg}</td>
+                                <td> ${orderDTo.getPayStatusEnum().message}</td>
+                                <td> ${orderDTo.createTime}</td>
+                                <td align="center"><a href="/sell/seller/order/detail?orderId=${orderDTo.getOrderId()}">详情</a>
+                                </td>
                                  <#if orderDTo.getOrderStatusEnum().msg ==("新订单")>
                                      <td align="center"><a
-                                             href="/sell/seller/order/cancel?orderId=${orderDTo.getOrderId()}">取消</a></td>
+                                             href="/sell/seller/order/cancel?orderId=${orderDTo.getOrderId()}">取消</a>
+                                     </td>
                                  <#else>
                                      <td align="center" class="disabled"></td>
                                  </#if>

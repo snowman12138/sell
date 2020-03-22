@@ -67,7 +67,7 @@
                             </select>
                         </div>
                         <input name= "productId" type="text" class="hidden" value="${(productInfo.productId)!""}">
-                        <button type="submit" class="btn btn-default">Submit</button>
+                        <button type="submit" class="btn btn-default btn-info">Submit</button>
                     </form>
                 </div>
             </div>

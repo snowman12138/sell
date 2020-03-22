@@ -177,9 +177,9 @@ public class SellerProductController {
         }
         //操作成功跳转到商品列表
         map.put("msg","商品添加成功！");
-        map.put("back","商品列表");
+        map.put("back","商品列表页面");
         map.put("url","/sell/seller/product/list");
-        return new ModelAndView("common/success",map);
+        return new ModelAndView("../common/success",map);
     }
 
 }
