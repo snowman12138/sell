@@ -44,6 +44,12 @@ public enum  ResultEnum {
     PRODUCT_ON_SUCCESS(25,"商品上架成功"),
 
     PRODUCT_DOWN_SUCCESS(26,"商品下架成功"),
+
+    LOGIN_FAIL(27,"该账号无登陆权限"),
+
+    LOGOUT_SUCCESS(28,"账号登出成功"),
+
+    ACCOUNT_NO_PREMISSION(29,"该账号无登陆权限"),
     ;
 
     private Integer code;

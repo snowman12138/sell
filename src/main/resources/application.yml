@@ -8,9 +8,13 @@ spring:
     show-sql: true
   jackson:
     default-property-inclusion: non_null
+#    热部署
   devtools:
     restart:
       enabled: true
+  redis:
+    host: 172.16.30.165
+    port: 6379
 server:
   context-path: /sell
 #logging:
@@ -24,10 +28,18 @@ server:
 #    com.imooc.LoggerTest: debug��ָ��ĳ��������־����
 
 wechat:
+  #微信公众号
   mpAppId: wxd898fcb01713c658
   mpAppSecret: f60abefc4e4ca5180508acd35a72d48a
+  #微信开放平台
+  openAppId: wxd898f35421713c343
+  openAppSecret: f60abedsfvbf3rtfmsx5180508acd35a34tds
   mchId: 1483469312
   mchKey: 098F6BCD4621D373CADE4E832627B4F6
   keyPath: C:\Users\ChaosBeethoven\Documents\Java学习项目\sell\doc\h5.p12
   notifyUrl: http://noodle.nat300.top/sell/pay/notify
 
+projectUrl:
+  wechatMpAuthorize: http://noodle.nat300.top
+  wechatOpenAuthorize: http://noodle.nat300.top
+  sell: http://noodle.nat300.top
