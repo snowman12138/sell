@@ -9,12 +9,14 @@ import com.imooc.sell.dto.OrderDTO;
 import com.imooc.sell.enums.OrderStatusEnum;
 import com.imooc.sell.enums.PayStatusEnum;
 import com.imooc.sell.enums.ResultEnum;
+import com.imooc.sell.exception.RespondBankException;
 import com.imooc.sell.exception.SellException;
 import com.imooc.sell.repository.OrderDetailRepository;
 import com.imooc.sell.repository.OrderMasterRepository;
 import com.imooc.sell.service.OrderService;
 import com.imooc.sell.service.PayService;
 import com.imooc.sell.service.ProductService;
+import com.imooc.sell.service.WebSocket;
 import com.imooc.sell.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -52,6 +54,12 @@ public class OrderServiceImpL implements OrderService {
     @Autowired
     private PayService payService;
 
+    @Autowired
+    private  PushMessageServiceImpl pushMessageService;
+
+    @Autowired
+    private WebSocket webSocket;
+
     @Override
     @Transactional
     public OrderDTO create(OrderDTO orderDTO) {
@@ -66,6 +74,7 @@ public class OrderServiceImpL implements OrderService {
             ProductInfo productInfo = productService.findOne(orderDetail.getProductId());
             if (productInfo == null){
                 throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
+//                throw new RespondBankException();
             }
             //2.计算总价
             orderAmount = productInfo.getProductPrice().multiply(new BigDecimal(orderDetail.getProductQuantity())).add(orderAmount);
@@ -95,6 +104,9 @@ public class OrderServiceImpL implements OrderService {
         List<CarDTO> carDTOArrayList = orderDTO.getOrderDetailList().stream().
                 map(e -> new CarDTO(e.getProductId(), e.getProductQuantity())).collect(Collectors.toList());
         productService.decreaseStock(carDTOArrayList);
+
+        //发送websocket消息
+        webSocket.sendMessage(orderDTO.getOrderId());
         return orderDTO;
     }
 
@@ -186,8 +198,11 @@ public class OrderServiceImpL implements OrderService {
         OrderMaster updateResult = orderMasterRepository.save(orderMaster);
         if (updateResult == null){
             log.error("【订单更新失败】订单状态更新失败，orderMaster={}",orderMaster);
-            new SellException(ResultEnum.ORDER_UPDATE_FAIL);
+            throw new SellException(ResultEnum.ORDER_UPDATE_FAIL);
         }
+
+        pushMessageService.orderStatus(orderDTO);
+
         return orderDTO;
     }
 

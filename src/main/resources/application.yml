@@ -29,7 +29,7 @@ server:
 
 wechat:
   #微信公众号
-  mpAppId: wxd898fcb01713c658
+  mpAppId: wx43dd40cbc7b11559
   mpAppSecret: f60abefc4e4ca5180508acd35a72d48a
   #微信开放平台
   openAppId: wxd898f35421713c343
@@ -38,6 +38,9 @@ wechat:
   mchKey: 098F6BCD4621D373CADE4E832627B4F6
   keyPath: C:\Users\ChaosBeethoven\Documents\Java学习项目\sell\doc\h5.p12
   notifyUrl: http://noodle.nat300.top/sell/pay/notify
+  #推送消息模板Id
+  TemplateId:
+    orderStatus: rVIv2RUT06KaSzNvOGYyRY67xWx_zFfingehq-IUD1I
 
 projectUrl:
   wechatMpAuthorize: http://noodle.nat300.top

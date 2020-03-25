@@ -33,8 +33,8 @@ public class SellerAuthorizeAspect {
 
     @Pointcut("execution(public * com.imooc.sell.controller.Seller*.*(..))" +
             "&& !execution(public * com.imooc.sell.controller.SellerUserController.*(..))")
-    public void Verify() {
-    }
+
+    public void Verify() {}
 
     @Before("Verify()")
     public void doVerify(){
